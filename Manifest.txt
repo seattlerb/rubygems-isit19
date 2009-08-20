@@ -1,0 +1,8 @@
+.autotest
+History.txt
+Manifest.txt
+README.txt
+Rakefile
+lib/isit19.rb
+lib/rubygems/commands/isit19_command.rb
+lib/rubygems_plugin.rb
