@@ -5,10 +5,20 @@ Gem::CommandManager.instance.register_command :isit19
 Gem.pre_install do |i| # installer
   require 'isit19'
 
+  next if i.instance_variable_defined? :@isit19_ran
+
+  i.instance_variable_set :@isit19_ran, true
+
   spec = i.spec
   name = "#{spec.name} #{spec.version}"
 
-  isit19 = IsIt19.new i.spec
+  begin
+    isit19 = IsIt19.new i.spec
+  rescue Gem::RemoteFetcher::FetchError
+    i.say "uh-oh! unable to fetch data for #{name}, maybe it doesn't exist yet?"
+    i.say isit19.url
+    next
+  end
 
   i.say
 

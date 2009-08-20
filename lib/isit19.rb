@@ -41,7 +41,8 @@ class IsIt19
     end
 
     @comments = comments.sort_by do |comment|
-      [comment['version'], comment['works_for_me'], comment['name']]
+      works = comment['works_for_me'] ? 1 : 0
+      [comment['version'], works, comment['name']]
     end.reverse
   end
 
