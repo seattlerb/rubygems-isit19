@@ -35,10 +35,16 @@ class IsIt19
     comments = JSON.parse json
 
     comments.map! do |comment|
-      comment['comment']['version'] =
-        Gem::Version.new comment['comment']['version']
-      comment['comment']
+      begin
+        comment['comment']['version'] =
+          Gem::Version.new comment['comment']['version']
+        comment['comment']
+      rescue ArgumentError # bad data from isitruby19.com
+        next
+      end
     end
+
+    comments.compact!
 
     @comments = comments.sort_by do |comment|
       works = comment['works_for_me'] ? 1 : 0
@@ -74,7 +80,11 @@ class IsIt19
 
     works = matching.select do |comment| comment['works_for_me'] end.length
 
-    "%2.0f%%" % (matching.length.to_f / works * 100)
+    percent = (matching.length.to_f / works * 100)
+    percent = 0   if percent.nan?
+    percent = 100 if percent > 100
+
+    "%2.0f%%" % percent
   end
 
   ##

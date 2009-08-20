@@ -16,7 +16,7 @@ Gem.pre_install do |i| # installer
     isit19 = IsIt19.new i.spec
   rescue Gem::RemoteFetcher::FetchError
     i.say "uh-oh! unable to fetch data for #{name}, maybe it doesn't exist yet?"
-    i.say isit19.url
+    i.say "http://isitruby19/#{spec.name}"
     next
   end
 
