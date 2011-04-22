@@ -80,7 +80,7 @@ class IsIt19
 
     works = matching.select do |comment| comment['works_for_me'] end.length
 
-    percent = (matching.length.to_f / works * 100)
+    percent = (works / matching.length.to_f * 100)
     percent = 0   if percent.nan?
     percent = 100 if percent > 100
 
